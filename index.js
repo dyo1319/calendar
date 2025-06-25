@@ -1,4 +1,3 @@
-//npm i express body-parser / ejs
 const port = 8888;
 const express = require('express');
 const app = express();
