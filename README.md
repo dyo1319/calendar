@@ -5,5 +5,7 @@ Calendar app Wtih Nodejssr engine.
 npm i express body-parser 
 ejs
 mysql2
+slashes@2.0.0
 
-# database used in this project (mysqlWorkbench)
+# database 
+db used in this project (mysqlWorkbench)

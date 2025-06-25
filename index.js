@@ -11,6 +11,9 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname,"./views"));
 
+global.addSlashes   = require('slashes').addSlashes;
+global.stripSlashes = require('slashes').stripSlashes;
+
 
 app.get('/', (req, res) => {
     res.render("index", {});
