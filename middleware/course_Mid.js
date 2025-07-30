@@ -12,6 +12,33 @@ async function AddCourse(req,res,next) {
     next();
 }
 
+
+async function GetAllCourses(req, res,next) {
+    let Query =`SELECT * FROM courses`;
+
+    const promisePool = db_pool.promise();
+    let rows=[];
+    req.courses_data = [];
+
+    try {
+        [rows] = await promisePool.query(Query);
+        req.courses_data = rows;
+    } catch (err) {
+        console.log(err);
+    }
+    
+    next();
+}
+
+async function DeleteCourses(req, res,next) {
+
+}
+
+
+
+
 module.exports = {
     AddCourse,
+    GetAllCourses,
+    DeleteCourses
 }

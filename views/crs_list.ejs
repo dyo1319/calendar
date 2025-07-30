@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course List</title>
+    <style>
+        td,th{border: 1px solid black;}
+    </style>
+</head>
+<body>
+    <h1>List courses</h1>
+    <table>
+        <tr>
+            <th></th>
+            <th>Course name</th>
+            <th></th>
+            <th></th>
+        </tr>
+        <% for(let crs of courses) { %> 
+            <tr>
+                <td></td>
+                <td><%= crs.name %></td>
+                <td></td>
+                <td></td>
+            </tr>
+        <% } %>
+    </table>
+</body>
+</html>
