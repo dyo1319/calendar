@@ -5,16 +5,33 @@ module.exports = router;
 const course_Mid = require('../middleware/course_Mid');
 
 router.get("/Add", (req, res) => {
-    res.render("crs_add", {});
+    res.render("crs_add", {
+        data: {},
+    });
 });
-
 router.post("/Add", [course_Mid.AddCourse], (req,res) => {
-     res.send("Course added successfully");
+    res.redirect("/crs/List");
 });
-
-
+router.get("/Edit/:id", [course_Mid.GetOneCourse], (req, res) => {
+    if(req.GoodOne) {
+        res.render("crs_add", {
+        data : req.one_courses_data,
+        });
+    } else {
+        res.redirect("/crs/List");
+    }
+});
+router.post("/Edit/:id", [course_Mid.UpdateCourse], (req,res) => {
+    res.redirect("/crs/List");
+});
 router.get("/List", [course_Mid.GetAllCourses], (req, res) => {
     res.render("crs_list", {
+        page_title: "List of Courses",  
         courses: req.courses_data,
     });
 });
+router.post("/Delete", [course_Mid.DeleteCourses], (req, res) => { 
+    res.redirect("/crs/List");
+});
+
+

@@ -11,8 +11,26 @@ async function AddCourse(req,res,next) {
     
     next();
 }
+async function UpdateCourse(req,res,next) {
+    let id = parseInt(req.params.id);
+    if((id == NaN) || (id <= 0)) {
+        req.GoodOne= false;
+        return next();
+    }
+    req.GoodOne= true;
+    let name = addSlashes(req.body.name);
+    let Query =`UPDATE courses SET name ='${name}' WHERE id='${id}'`;
+    const promisePool = db_pool.promise();
+    let rows=[];
 
-
+    try {
+        [rows] = await promisePool.query(Query);
+    } catch (err) {
+        console.log(err);
+    }
+    
+    next();
+}
 async function GetAllCourses(req, res,next) {
     let Query =`SELECT * FROM courses`;
 
@@ -29,16 +47,50 @@ async function GetAllCourses(req, res,next) {
     
     next();
 }
-
 async function DeleteCourses(req, res,next) {
-
+    let id = parseInt(req.body.id);
+    if(id > 0) { 
+        let Query =`DELETE FROM courses WHERE id='${id}'`;
+        const promisePool = db_pool.promise();
+        let rows=[];
+        try {
+            [rows] = await promisePool.query(Query);
+        } catch (err) {
+            console.log(err);
+        }
+    }   
+    next();
 }
+async function GetOneCourse(req, res,next) {
+   let id = parseInt(req.params.id);
+   if((id == NaN) || (id <= 0)) {
+        req.GoodOne= false;
+        return next();
+    }
+   req.GoodOne= true;
+   let Query =`SELECT * FROM courses WHERE id='${id}'`;
+    
+    const promisePool = db_pool.promise();
+    let rows=[];
+    req.one_courses_data = [];
 
-
+    try {
+        [rows] = await promisePool.query(Query);
+        if(rows.length > 0) {
+            req.one_courses_data = rows[0];
+        } 
+    } catch (err) {
+        console.log(err);
+    }
+    
+    next();
+}
 
 
 module.exports = {
     AddCourse,
     GetAllCourses,
-    DeleteCourses
+    DeleteCourses,
+    GetOneCourse,
+    UpdateCourse
 }
