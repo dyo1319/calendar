@@ -1,7 +1,9 @@
 const { addSlashes } = require("slashes");
-const { md5 } = require("md5");
+const md5 = require('md5');
 
-async function CheckLogin(uname, passwd) {
+async function CheckLogin(req, res, next) {
+    let uname   = (req.body.uname   !== undefined)  ? addSlashes(req.body.uname      ) : "";
+    let passwd  = (req.body.passwd  !== undefined)  ?            req.body.passwd       : "";
     let enc_pass = md5("A"+passwd);
     let Query = `SELECT * FROM users WHERE uname='${uname}' AND passwd='${enc_pass}'`;
 
@@ -13,10 +15,10 @@ async function CheckLogin(uname, passwd) {
         console.log(err);
     }
 
-    return (rows.length > 0);
+    req.validUser = (rows.length > 0);
+    
+    next();
 }
-
-
 async function AddUser(req,res,next) {
     let name    = (req.body.name    !== undefined)  ? addSlashes(req.body.name       ) : "";
     let uname   = (req.body.uname   !== undefined)  ? addSlashes(req.body.uname      ) : "";
@@ -129,8 +131,6 @@ async function GetOneUser(req, res,next) {
     
     next();
 }
-
-
 
 
 
