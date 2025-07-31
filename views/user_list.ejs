@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= page_title %></title>
+    <style>
+        td,th{border: 1px solid black;}
+    </style>
+</head>
+<body>
+    <h1><%= page_title %></h1>
+    <a href="/u/Add">Add user</a>
+    <table>
+        <tr>
+            <th></th>
+            <th>name</th>
+            <th>email</th>
+            <th>tz</th>
+            <th></th>
+        </tr>
+        <% for(let usr of users) { %> 
+            <tr>
+                <td>
+                    <a href="/u/Edit/<%= usr.id %>">edit</a>
+                </td>
+                <td><%= usr.name %></td>
+                <td><%= usr.email %></td>
+                <td><%= usr.tz %></td>
+                <td>
+                    <form action="/u/Delete" method="post">
+                        <input type="hidden" name="id" value="<%= usr.id %>">
+                        <button>Delete</button>
+                    </form>
+                </td>
+            </tr>
+        <% } %>
+    </table>
+</body>
+</html>

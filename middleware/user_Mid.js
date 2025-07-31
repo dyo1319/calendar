@@ -38,7 +38,7 @@ async function UpdateUser(req,res,next) {
     }
     req.GoodOne= true;
  
-    let Query =`UPDATE User SET `;
+    let Query =`UPDATE users SET `;
      Query += `name    ='${name   }'  ,`; 
      Query += `uname   ='${uname  }'  ,`; 
      Query += `passwd  ='${passwd }'  ,`; 
@@ -58,15 +58,15 @@ async function UpdateUser(req,res,next) {
     next();
 }
 async function GetAllUser(req, res,next) {
-    let Query =`SELECT * FROM User`;
+    let Query =`SELECT * FROM users`;
 
     const promisePool = db_pool.promise();
     let rows=[];
-    req.User_data = [];
+    req.user_data = [];
 
     try {
         [rows] = await promisePool.query(Query);
-        req.User_data = rows;
+        req.users_data = rows;
     } catch (err) {
         console.log(err);
     }
@@ -76,7 +76,7 @@ async function GetAllUser(req, res,next) {
 async function DeleteUser(req, res,next) {
     let id = parseInt(req.body.id);
     if(id > 0) { 
-        let Query =`DELETE FROM User WHERE id='${id}'`;
+        let Query =`DELETE FROM users WHERE id='${id}'`;
         const promisePool = db_pool.promise();
         let rows=[];
         try {
@@ -94,16 +94,16 @@ async function GetOneUser(req, res,next) {
         return next();
     }
    req.GoodOne= true;
-   let Query =`SELECT * FROM User WHERE id='${id}'`;
+   let Query =`SELECT * FROM users WHERE id='${id}'`;
     
     const promisePool = db_pool.promise();
     let rows=[];
-    req.one_User_data = [];
+    req.one_user_data = [];
 
     try {
         [rows] = await promisePool.query(Query);
         if(rows.length > 0) {
-            req.one_User_data = rows[0];
+            req.one_user_data = rows[0];
         } 
     } catch (err) {
         console.log(err);
