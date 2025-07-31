@@ -11,7 +11,6 @@ CREATE TABLE users (
     email VARCHAR(100) NOT NULL,
     type_id INT,
     tz VARCHAR(20),
-    FOREIGN KEY (type_id) REFERENCES user_types(id)
 );
 
 CREATE TABLE courses (
