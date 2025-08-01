@@ -38,3 +38,11 @@ CREATE TABLE students_to_teachers (
     FOREIGN KEY (student_id) REFERENCES users(id),
     FOREIGN KEY (teacher_id) REFERENCES users(id)
 );
+
+
+CREATE TABLE crs2user (
+    id INT(11) NOT NULL AUTO_INCREMENT,
+    crs_id INT(11) NOT NULL,
+    user_id INT(11) NOT NULL,
+    PRIMARY KEY (id)
+);

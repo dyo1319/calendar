@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>רשימת תוכניות</title>
+    <style>
+        body {direction: rtl}
+    </style>
+</head>
+<body>
+<H1>רשימת תוכניות</H1>
+<table>
+    <tr><td colspan="55">
+            <form action="" method="get">
+                <label for="sd">מתאריך</label>
+                <input type="date" name="sd" id="sd" value="<%= filter_params.sd %>">
+                <label for="ed">עד תאריך</label>
+                <input type="date" name="ed" id="ed" value="<%= filter_params.ed %>">
+                <label for="free_txt">ביטוי</label>
+                <input type="text" name="free_txt" id="free_txt"
+                       value="<%= filter_params.free_txt %>"
+                >
+                <label for="crs_id">קורס:</label>
+                <select name="crs_id" id="crs_id">
+                    <option value="-1"
+                            <% if(filter_params.crs_id == -1){ __append('selected="1" '); }%>
+                    >--- כל הקורסים ---</option>
+                <% for(let crs of courses) { %>
+                        <option value="<%= crs.id %>"
+                                <% if(filter_params.crs_id == crs.id){ __append('selected="1" '); }%>
+                        ><%= crs.name %></option>
+                    <% } %>
+                </select>
+                <button>סנן</button>
+            </form>
+        </td></tr>
+    <tr>
+        <th>תאריך</th>
+        <th>הקורס</th>
+        <th>התחלה</th>
+        <th>סיום</th>
+        <th>נושא ללמוד</th>
+        <th></th>
+    </tr>
+    <% for(let act of activity_data) { %>
+        <tr>
+            <td><%= act.nice_date %></td>
+            <td><%= courses_names[act.course_id] %></td>
+            <td><%= act.start_time %></td>
+            <td><%= act.end_time %></td>
+            <td><%= act.notes %></td>
+            <td></td>
+        </tr>
+    <% } %>
+</table>
+<script>
+    let filter_crs_id='<%= filter_params.crs_id %>';
+    let courses_list=[];
+    <% for(let crs of courses) { %>
+    courses_list[Number('<%= crs.id %>')] = '<%= crs.name %>' ;
+    <% } %>
+    console.log(courses_list);
+    function fillTable(){
+
+    }
+</script>
+</body>
+</html>
