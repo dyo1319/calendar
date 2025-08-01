@@ -13,6 +13,7 @@ app.set("views", path.join(__dirname,"./views"));
 
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
+global.Jwt = require('jsonwebtoken');
 
 
 let db_M = require('./database');
@@ -29,7 +30,7 @@ const user_Mid = require('./middleware/user_Mid');
 const crs_R = require('./routers/course_R');
 app.use('/crs',[user_Mid.isLogged],crs_R);
 const usr_R = require('./routers/users_R');
-app.use('/u',usr_R);
+app.use('/u',[user_Mid.isLogged],usr_R);
 const auth_R = require('./routers/auth_R');
 app.use('/',auth_R);
 
